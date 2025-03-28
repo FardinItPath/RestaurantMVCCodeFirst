@@ -22,7 +22,7 @@ namespace RestaurantMVCCodeFirst.Models
         public DateTime CreatedDT { get; set; } = DateTime.UtcNow;
 
         [DataType(DataType.DateTime)]
-        public DateTime? UpdatedDT { get; set; } = DateTime.UtcNow;
+        public DateTime? UpdatedDT { get; set; }
 
         [ForeignKey("RoleModel")]
         public int RoleId { get; set; }

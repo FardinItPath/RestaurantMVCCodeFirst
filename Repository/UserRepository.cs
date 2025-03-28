@@ -59,6 +59,7 @@ namespace RestaurantMVCCodeFirst.Repository
 
         public async Task Update(UserModel user)
         {
+            user.UpdatedDT = DateTime.UtcNow;
             _context.Users.Update(user);
             _context.SaveChanges();
         }

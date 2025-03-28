@@ -133,10 +133,10 @@ namespace RestaurantMVCCodeFirst.Controllers
             var username = TempData["ResetUsername"] as string;
             if (string.IsNullOrEmpty(username)) return RedirectToAction("ForgotPassword");
 
+            model.UserName = username; // Set the username in the model
             await _userService.ResetPassword(model);
 
-
-            return RedirectToAction("Login"); ;
+            return RedirectToAction("Login");
         }
     }
 }

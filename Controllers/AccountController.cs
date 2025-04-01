@@ -52,14 +52,14 @@ namespace RestaurantMVCCodeFirst.Controllers
 
 
         [HttpGet("login")]
-        [Route("")]
+        [Route("Login")]
         public IActionResult Login()
         
         {
             return View();
         }
 
-        [HttpPost("login")]
+        [HttpPost("Account/login")]
         public async Task<IActionResult> Login(UserViewModel model)
         {
             if (!ModelState.IsValid)
@@ -77,7 +77,7 @@ namespace RestaurantMVCCodeFirst.Controllers
             HttpContext.Session.SetString("Username", authenticatedUser.Username);
 
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Menu");
 
         }
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RestaurantMVCCodeFirst.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace RestaurantMVCCodeFirst.View_Model
 {
@@ -19,5 +20,6 @@ namespace RestaurantMVCCodeFirst.View_Model
         [Required]
         public int CategoryId { get; set; }
         public string? CategoryName { get; set; }
+        public IEnumerable<CategoryModel>? Categories { get; set; }
     }
 }

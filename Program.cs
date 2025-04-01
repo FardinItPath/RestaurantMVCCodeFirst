@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using RestaurantMVCCodeFirst.Data;
 using RestaurantMVCCodeFirst.Repository;
@@ -17,8 +18,17 @@ namespace RestaurantMVCCodeFirst
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IMenuRepository, MenuRepository>();
             builder.Services.AddScoped<IMenuService, MenuService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
 
             builder.Services.AddSession();
+
+            // ?? Add Authentication
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/Login"; // Redirect to login if not authenticated
+                    options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect if unauthorized
+                });
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -39,7 +49,7 @@ namespace RestaurantMVCCodeFirst
             app.UseSession();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

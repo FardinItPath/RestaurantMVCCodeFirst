@@ -9,5 +9,8 @@ namespace RestaurantMVCCodeFirst.Models
 
         [Required, StringLength(100)]
         public string? CategoryName { get; set; }
+        public virtual ICollection<MenuModel> Menus { get; set; }
+
+
     }
 }

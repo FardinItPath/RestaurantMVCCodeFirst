@@ -9,5 +9,6 @@ namespace RestaurantMVCCodeFirst.Repository
         Task AddMenuAsync(MenuModel menu);
         Task UpdateMenuAsync(MenuModel menu);
         Task DeleteMenuAsync(int menuId);
+        Task<bool> MenuExistsAsync(int id); // Add this line
     }
 }

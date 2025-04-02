@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RestaurantMVCCodeFirst.Models;
 using RestaurantMVCCodeFirst.Services;
@@ -42,7 +43,7 @@ namespace RestaurantMVCCodeFirst.Controllers
             var user = new UserModel
             {
                 Username = model.Username,
-                Password = model.Password, // Consider hashing before saving
+                Password = model.Password, 
                 RoleId = model.RoleId
             };
 
@@ -50,7 +51,7 @@ namespace RestaurantMVCCodeFirst.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-
+        [Route("")]
         [HttpGet("login")]
         [Route("Login")]
         public IActionResult Login()
@@ -59,7 +60,7 @@ namespace RestaurantMVCCodeFirst.Controllers
             return View();
         }
 
-        [HttpPost("Account/login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(UserViewModel model)
         {
             if (!ModelState.IsValid)
@@ -70,14 +71,14 @@ namespace RestaurantMVCCodeFirst.Controllers
             var authenticatedUser = await _userService.AuthenticateUser(model.Username, model.Password);
             if (authenticatedUser == null) 
             {
-                TempData["Error"] = "Invalid username or password!";
+                ViewBag.ErrorMessage = "Incorrect username or password!";
                 return View(model);
             }
             HttpContext.Session.SetString("UserId", authenticatedUser.UserId.ToString());
             HttpContext.Session.SetString("Username", authenticatedUser.Username);
-
-
-            return RedirectToAction("Index", "Menu");
+            HttpContext.Session.SetString("UserRole", authenticatedUser.Role.RoleName);
+            HttpContext.Session.SetInt32("RoleId", authenticatedUser.RoleId);
+            return RedirectToAction("list","menu");
 
         }
 
@@ -88,15 +89,12 @@ namespace RestaurantMVCCodeFirst.Controllers
             return RedirectToAction("Login");
         }
 
-
-        // 2️⃣ POST: Handle Forgot Password Request
         [HttpGet("forgot-password")]
         public IActionResult ForgotPassword()
         {
             return View();
         }
 
-        // 2️⃣ POST: Handle Forgot Password Request
         [HttpPost("forgot-password")]
         public IActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
@@ -113,7 +111,7 @@ namespace RestaurantMVCCodeFirst.Controllers
             return RedirectToAction("ResetPassword");
         }
 
-        // 3️⃣ GET: Reset Password View
+     
         [HttpGet("reset-password")]
         public IActionResult ResetPassword()
         {
@@ -124,7 +122,7 @@ namespace RestaurantMVCCodeFirst.Controllers
             return View();
         }
 
-        // 4️⃣ POST: Handle Reset Password
+      
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
@@ -133,7 +131,7 @@ namespace RestaurantMVCCodeFirst.Controllers
             var username = TempData["ResetUsername"] as string;
             if (string.IsNullOrEmpty(username)) return RedirectToAction("ForgotPassword");
 
-            model.UserName = username; // Set the username in the model
+            model.UserName = username; 
             await _userService.ResetPassword(model);
 
             return RedirectToAction("Login");

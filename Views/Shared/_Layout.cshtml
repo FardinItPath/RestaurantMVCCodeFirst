@@ -7,37 +7,42 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/RestaurantMVCCodeFirst.styles.css" asp-append-version="true" />
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
 </head>
 <body>
     <header class="overflow-hidden">
-        @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"> *@
-        @*     <div class="container-fluid"> *@
-        @*         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RestaurantMVCCodeFirst</a> *@
-        @*         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" *@
-        @*                 aria-expanded="false" aria-label="Toggle navigation"> *@
-        @*             <span class="navbar-toggler-icon"></span> *@
-        @*         </button> *@
-        @*         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"> *@
-        @*             <ul class="navbar-nav flex-grow-1"> *@
-        @*                 <li class="nav-item"> *@
-        @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a> *@
-        @*                 </li> *@
-        @*                 <li class="nav-item"> *@
-        @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
-        @*                 </li> *@
-        @*             </ul> *@
-        @*         </div> *@
-        @*     </div> *@
-        @* </nav> *@
-        <div>
-            @if (Context.Session.GetInt32("UserId") != null)
-            {
-                <div class="d-flex justify-content-between  mb-3">
-                    <a asp-controller="Task" asp-action="Create" class="btn btn-primary py-2">Add Task</a>
-                    <a asp-controller="Account" class="btn btn-danger py-2 " asp-action="Logout">Logout</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Restaurant</a>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <!-- Add other navigation links here if needed -->
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto">
+                        @if (Context.Session.GetInt32("UserId") != null)
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="Account" class="btn btn-danger py-2" asp-action="Logout">Logout</a>
+                            </li>
+                        }
+                    </ul>
                 </div>
-            }
-        </div>
+            </div>
+        </nav>
+
+        @* <div> *@
+            @* @if (Context.Session.GetInt32("UserId") != null) *@
+            @* { *@
+            @*     <div class="d-flex justify-content-between  mb-3"> *@
+
+            @*         <a asp-controller="Account" class="btn btn-danger py-2  " asp-action="Logout">Logout</a> *@
+            @*     </div> *@
+            
+        @* </div> *@
     </header>
     <div class="container">
         <main role="main" class="pb-3">

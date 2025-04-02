@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RestaurantMVCCodeFirst.Data;
+﻿
+using RestaurantMVCCodeFirst.Repository;
 using RestaurantMVCCodeFirst.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,49 +8,37 @@ namespace RestaurantMVCCodeFirst.Services
 {
     public class MenuService : IMenuService
     {
-        private readonly AppDbContext _context;
+        private readonly IMenuRepository _menuRepository;
 
-        public MenuService(AppDbContext context)
+        public MenuService(IMenuRepository menuRepository)
         {
-            _context = context;
+            _menuRepository = menuRepository;
         }
 
         public async Task<IEnumerable<MenuModel>> GetAllMenusAsync()
         {
-            return await _context.Menu.Include(m => m.Category).Where(m => m.IsActive).ToListAsync();
+            return await _menuRepository.GetAllMenusAsync();
         }
 
-        public async Task<MenuModel> GetMenuByIdAsync(int menuId)
+        public async Task<MenuModel> GetMenuByIdAsync(int id)
         {
-            return await _context.Menu.Include(m => m.Category)
-                .FirstOrDefaultAsync(m => m.MenuId == menuId && m.IsActive);
+            return await _menuRepository.GetMenuByIdAsync(id);
         }
 
         public async Task AddMenuAsync(MenuModel menu)
         {
-            await _context.Menu.AddAsync(menu);
-            await _context.SaveChangesAsync();
+            menu.IsActive = true;
+            await _menuRepository.AddMenuAsync(menu);
         }
 
         public async Task UpdateMenuAsync(MenuModel menu)
         {
-            _context.Menu.Update(menu);
-            await _context.SaveChangesAsync();
+            await _menuRepository.UpdateMenuAsync(menu);
         }
 
-        public async Task DeleteMenuAsync(int menuId)
+        public async Task DeleteMenuAsync(int id)
         {
-            var menu = await _context.Menu.FindAsync(menuId);
-            if (menu != null)
-            {
-                menu.IsActive = false;
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        public async Task<bool> MenuExistsAsync(int menuId)
-        {
-            return await _context.Menu.AnyAsync(m => m.MenuId == menuId && m.IsActive);
+            await _menuRepository.DeleteMenuAsync(id);
         }
     }
 }

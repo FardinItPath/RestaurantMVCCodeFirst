@@ -23,12 +23,12 @@ namespace RestaurantMVCCodeFirst
             builder.Services.AddSession();
 
             // ?? Add Authentication
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/Account/Login"; // Redirect to login if not authenticated
-                    options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect if unauthorized
-                });
+            //builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //    .AddCookie(options =>
+            //    {
+            //        options.LoginPath = "/Account/Login"; // Redirect to login if not authenticated
+            //        options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect if unauthorized
+            //    });
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -54,7 +54,7 @@ namespace RestaurantMVCCodeFirst
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Account}/{action=Login}/{id?}");
+                pattern: "{controller=Account}/{action=Index}/{id?}");
 
             app.Run();
         }

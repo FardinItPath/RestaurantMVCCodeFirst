@@ -8,31 +8,33 @@ namespace RestaurantMVCCodeFirst.Models
         [Key]
         public int MenuId { get; set; }
 
-        [Required, StringLength(100)]
-        public string? Name { get; set; }
+        [Required(ErrorMessage = "Menu name is required.")]
+        [StringLength(255, MinimumLength = 4, ErrorMessage = "Menu name must be between 4 and 255 characters.")]
+        public string Name { get; set; }
 
-        [Required]
+        [StringLength(1000, ErrorMessage = "Description cannot exceed 1000 characters.")]
         public string? Description { get; set; }
 
+        [Required(ErrorMessage = "Price is required.")]
+        [Range(0.01, 99999.99, ErrorMessage = "Price must be between $0.01 and $99,999.99.")]
         [Column(TypeName = "decimal(18,2)")]
-
         public decimal Price { get; set; }
-      
+
         public bool IsActive { get; set; } = true;
 
-        [DataType(DataType.DateTime)]
-        public DateTime CreatedDT { get; set; } = DateTime.UtcNow;
-
-        public int CreatedBy { get; set; }
-
-        public int? UpdatedBy { get; set; } 
-
-        public DateTime? UpdatedDT { get; set; } = DateTime.UtcNow;
-
-        // Foreign Key for Category
-        [ForeignKey("Category")]
+        [Required(ErrorMessage = "Category selection is required.")]
         public int CategoryId { get; set; }
-        public virtual CategoryModel? Category { get; set; }
 
+        [ForeignKey("CategoryId")]
+        public CategoryModel? Category { get; set; }
+
+        [Required]
+        [DataType(DataType.DateTime)]
+        public DateTime CreatedDT { get; set; } = DateTime.Now;
+
+        [DataType(DataType.DateTime)]
+        public DateTime? UpdatedDT { get; set; }
     }
 }
+
+

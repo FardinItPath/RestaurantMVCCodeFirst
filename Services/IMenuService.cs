@@ -11,7 +11,7 @@ namespace RestaurantMVCCodeFirst.Services
         Task AddMenuAsync(MenuModel menu); // Renamed from CreateMenuItemAsync
         Task UpdateMenuAsync(MenuModel menu);
         Task DeleteMenuAsync(int menuId);
-        Task<bool> MenuExistsAsync(int menuId); // Added this method
+        //Task<bool> MenuExistsAsync(int menuId); // Added this method
         
     }
 }

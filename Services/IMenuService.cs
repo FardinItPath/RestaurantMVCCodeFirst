@@ -6,12 +6,12 @@ namespace RestaurantMVCCodeFirst.Services
 {
     public interface IMenuService
     {
-        Task<IEnumerable<MenuModel>> GetAllMenusAsync(); // Renamed from GetAllMenuItemsAsync
+        Task<IEnumerable<MenuModel>> GetAllMenusAsync(); 
         Task<MenuModel> GetMenuByIdAsync(int menuId);
-        Task AddMenuAsync(MenuModel menu); // Renamed from CreateMenuItemAsync
+        Task AddMenuAsync(MenuModel menu); 
         Task UpdateMenuAsync(MenuModel menu);
         Task DeleteMenuAsync(int menuId);
-        //Task<bool> MenuExistsAsync(int menuId); // Added this method
+        //Task<bool> MenuExistsAsync(int menuId); 
         
     }
 }

@@ -45,7 +45,7 @@ namespace RestaurantMVCCodeFirst.Repository
         public async Task<UserModel> GetUserByUsername(string username)
         {
             return await _context.Users
-                .Include(u => u.Role)  // ✅ Ensure Role is included
+                .Include(u => u.Role)  
                 .FirstOrDefaultAsync(u => u.Username == username);
         }
 

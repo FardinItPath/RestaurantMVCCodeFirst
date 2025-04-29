@@ -5,8 +5,6 @@ namespace RestaurantMVCCodeFirst.Services
 {
     public interface IUserService
     {
-        object Role { get; }
-
         Task<List<UserModel>> GetAllUsers();
         Task<UserModel> GetUserById(int userId); 
         Task<UserModel> GetUserByUsername(string username); 
